@@ -1,0 +1,64 @@
+Vad är pull respektive push?
+	
+	pull är när du uppdaterar din local repository med det som finns i remote repository.
+	t.ex om du ligger bakom och måste uppdatera dina filer till det senaste versionen från github.
+
+	push är när du uppdaterar remote med din lokala repo.
+	T.ex när du har gjort nya commits och vill skicka dem till din github repo.
+
+När använder man log respektive status?
+	
+	log används för att se commit historik för repot.
+	Där kan du se både var du är i historiken, samt var remote repository är.
+	
+	status används för att se information om din repo.
+	Den visar ändringar, vad som finns i staging area, vilken branch du är på osv.
+	Den visar även om du är före eller efter remote repository.
+
+Vad är en git branch och varför är de viktiga?
+	
+	En branch är ett sätt att ha flera grenar av din repo.
+	Det låter dig göra ändringar utan att påverkda din main branch.
+	Väldigt bra när du vill testa nya saker, funktioner osv utan att riskera att något förstörs.
+	Du kan också slå ihop dina grenar när du är klar.
+
+Det finns flera sätt att rulla tillbaka koden till ett tidigare tillstånd.
+Förklara skillnaden och motivera när man skulle använda den ena eller andra metoden.
+
+	restore: Återställer filer från en viss commit. Har ingen påverkan på din commit historik.	
+	revert: Skapa en ny commit som tar bort ändringarna du gjorde.
+	reset: flyttar HEAD till en viss commit i din historik. finns flera varianter.
+	reset --hard : flyttar HEAD till en viss commit och återställer din staging area och katalog.
+	reset --mixed: flyttar HEAD och återställer staging area, men inte din katalog.
+	reset --soft: flyttar HEAD, men återställer inte din staging area eller katalog.
+
+	Användning:
+		För de olika typerna av reset:
+			Om man har gjort ett litet fel i sina ändringar och commitat det,
+			så kan man köra reset --mixed för att enkelt fixa och göra en ny commit.
+			Detta är även bra om du har commitat två saker samtidigt när de borde vara enskila.
+
+			Har man bara nämnt sin commit fel, kan man använda reset --soft och bara commita igen, eller använda commit --amend.
+
+			Har man gjort jättefel och vill bara bli av med allt efter en viss commit, kan man använda reset --hard istället.
+			
+			Reset är väldigt riskabelt vid grupparbete eftersom den påverkar commit historik.
+			Vill man ha ett säkrare sätt att ta bort ändringar kan man använda revert istället.
+			
+			Restore kan användas både till att återställa filer och att tömma staging area med git restore --staged
+			Har du tagit bort dina filer, kan du få tillbaka dem med git restore.
+			Vill du ha en äldre version av en fil, kan du använda git restore --source=HEAD~ eller ange hash kod till en commit.
+
+
+	exempel: git reset --hard HEAD~1
+		 HEAD is now at d11e99f Change guessing range from 1000 to 10 for main
+		
+		 git revert HEAD
+		 [testarea 8bbbb29] Revert "Change guessing range from 1000 to 10 for main"
+		 1 file changed, 2 insertions(+), 2 deletions(-)	
+
+		 git restore GuessingGame.java
+		 (ingen output)
+
+		 git restore --staged GuessingGame.java
+		 (ingen output)
