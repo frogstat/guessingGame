@@ -1,3 +1,5 @@
+Siktar på VG
+
 Vad är pull respektive push?
 	
 	pull är när du uppdaterar din local repository med det som finns i remote repository.
@@ -62,3 +64,65 @@ Förklara skillnaden och motivera när man skulle använda den ena eller andra m
 
 		 git restore --staged GuessingGame.java
 		 (ingen output)
+
+
+Beskriv och jämför hur man kan använda git rebase och git merge i ett scenario
+där flera utvecklare jobbar på olika feature branches. Diskutera fördelarna och
+nackdelarna med båda teknikerna, samt hur de påverkar historiken.
+
+	git merge: skapa en ny commit som slår ihop två olika grenar. Historiken är oförändrad.
+
+	feature:     A -> B                         A ->  B
+	            /               blir till:     /       \
+	main:      C -> D -> E                    C -> D -> E
+
+	git rebase: slå ihop genom att sätta dina commits i feature ovanpå din senaste version av main.
+
+	feature:         A - > B
+	                /             blir till: C -> D -> E -> A -> B
+	main:    C - > D -> E
+
+Uppgift: Skapa ett repo med två eller fler feature branches som utvecklare arbetar på.
+Beskriv hur du löser konflikter som uppstår under rebase och merge och visa slutresultatet i historiken.
+
+	output merge:
+		från main:
+		git merge feature1 -> konflikt, hantera konfliker i textredigerare, git add ., git merge --continue
+		sedan samma sak med feature2
+		slutlogg:
+			a3d2456 (HEAD -> main) Merge branch 'feature2'
+			6ad1121 Merge branch 'feature1'
+			5bf58fd Update main after creating branches
+			ed816e1 (feature2) add second feature
+			e0897d8 (feature1) add first feature
+			214fb1e add main
+
+	output rebase:
+		från feature1:
+		git rebase main, hantera eventuella konflikter som tidigare, sedan merge från main vilket leder till fast-forward (ingen merge commit)
+		Sedan samma sak från feature2
+		slutlogg:
+			2a209eb (HEAD -> main, feature2) add second feature
+			cde5053 (feature1) add first feature
+			6ffcd63 Update main after creating branches
+			214fb1e add main
+
+
+	Som vi kan se är loggen med rebase mycket enklare att läsa.
+	Den stora nackdelen är att vi har nu ändrat historiken, vilket kan skapa konflikt för andra utvecklare.
+	Troligtvis kommer en vanlig git push inte fungera efter en rebase, så du måste göra git push --force eller den säkrare git push --force-with-lease
+	Merge har fördelen att den visar precis vilken ordning som ändrangarna har gjorts. Alltså att den bibehåller kontext.
+	Merge skapar också mindre konflikt, men den leder ofta till mer svårlästa loggar om du har många merge.
+
+
+	Exempel på konflikt:
+	<<<<<<< HEAD
+	first feature
+	=======
+	second feature
+	>>>>>>> ed816e1 (add second feature)
+
+	En manuell hantering av detta kan se ut som:
+
+	first feature
+	second feature
