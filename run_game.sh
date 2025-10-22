@@ -7,7 +7,7 @@ if [[ ! -e GuessingGame.java || ! -e Guesser.java ]];then
 	exit 1
 fi
 
-if [ ! -e Vanya_Saman_labb ];then
+if [[ ! -e Vanya_Saman_labb ]];then
 	mkdir Vanya_Saman_labb
 fi
 
@@ -25,5 +25,5 @@ echo "*******************************"
 
 echo "Done!"
 rm *.class
-echo -n "Files in folder: "; ls
+echo -n "Files in folder: ";ls
 exit 0
