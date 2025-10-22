@@ -20,8 +20,8 @@ När använder man log respektive status?
 Vad är en git branch och varför är de viktiga?
 	
 	En branch är ett sätt att ha flera grenar av din repo.
-	Det låter dig göra ändringar utan att påverkda din main branch.
-	Väldigt bra när du vill testa nya saker, funktioner osv utan att riskera att något förstörs.
+	Det låter dig göra ändringar utan att påverka din main branch.
+	Väldigt bra när du vill testa nya saker, funktioner osv. utan att riskera att något förstörs.
 	Du kan också slå ihop dina grenar när du är klar.
 
 Det finns flera sätt att rulla tillbaka koden till ett tidigare tillstånd.
@@ -38,7 +38,7 @@ Förklara skillnaden och motivera när man skulle använda den ena eller andra m
 		För de olika typerna av reset:
 			Om man har gjort ett litet fel i sina ändringar och commitat det,
 			så kan man köra reset --mixed för att enkelt fixa och göra en ny commit.
-			Detta är även bra om du har commitat två saker samtidigt när de borde vara enskila.
+			Detta är även bra om du har commitat två saker samtidigt när de borde vara enskilda.
 
 			Har man bara nämnt sin commit fel, kan man använda reset --soft och bara commita igen, eller använda commit --amend.
 
@@ -70,7 +70,7 @@ Beskriv och jämför hur man kan använda git rebase och git merge i ett scenari
 där flera utvecklare jobbar på olika feature branches. Diskutera fördelarna och
 nackdelarna med båda teknikerna, samt hur de påverkar historiken.
 
-	git merge: skapa en ny commit som slår ihop två olika grenar. Historiken är oförändrad.
+	git merge: skapa en ny commit som slår ihop ändringarna i två olika grenar. Historiken är oförändrad.
 
 	feature:     A -> B                         A ->  B
 	            /               blir till:     /       \
@@ -87,7 +87,7 @@ Beskriv hur du löser konflikter som uppstår under rebase och merge och visa sl
 
 	output merge:
 		från main:
-		git merge feature1 -> konflikt, hantera konfliker i textredigerare, git add ., git merge --continue
+		git merge feature1 -> konflikt, hantera konflikter i textredigerare, git add ., git merge --continue
 		sedan samma sak med feature2
 		slutlogg:
 			a3d2456 (HEAD -> main) Merge branch 'feature2'
@@ -111,7 +111,7 @@ Beskriv hur du löser konflikter som uppstår under rebase och merge och visa sl
 	Som vi kan se är loggen med rebase mycket enklare att läsa.
 	Den stora nackdelen är att vi har nu ändrat historiken, vilket kan skapa konflikt för andra utvecklare.
 	Troligtvis kommer en vanlig git push inte fungera efter en rebase, så du måste göra git push --force eller den säkrare git push --force-with-lease
-	Merge har fördelen att den visar precis vilken ordning som ändrangarna har gjorts. Alltså att den bibehåller kontext.
+	Merge har fördelen att den visar precis vilken ordning som ändringarna har gjorts. Alltså att den bibehåller kontext.
 	Merge skapar också mindre konflikt, men den leder ofta till mer svårlästa loggar om du har många merge.
 
 
